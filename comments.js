@@ -80,6 +80,6 @@ var Comment = React.createClass({
 });
 
 React.render(
-  <CommentBox url="http://localhost:8000/comments.json" pollInterval={ 2000 } />,
+  <CommentBox url="comments.json" pollInterval={ 2000 } />,
   document.getElementById('content')
 );

@@ -1,8 +1,3 @@
-var data = [
-  { author: "Pete Hunt", text: "This is one comment" },
-  { author: "Jordan Walke", text: "This is *another* comment" }
-];
-
 var CommentBox = React.createClass({
   getInitialState: function() {
     return { data: [] };
@@ -56,11 +51,26 @@ var CommentList = React.createClass({
 });
 
 var CommentForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var author = React.findDOMNode(this.refs.author).value.trim();
+    var text = React.findDOMNode(this.refs.text).value.trim();
+    if(!author || !text) {
+      return;
+    }
+    // TODO: Send request to server
+    React.findDOMNode(this.refs.author).value = "";
+    React.findDOMNode(this.refs.text).value = "";
+    return;
+  },
+
   render: function() {
     return (
-      <div className="commentForm">
-      Hello, world! I am a CommentForm.
-        </div>
+      <form className="commentForm" onSubmit={ this.handleSubmit }>
+      <input type="text" placeholder="Your name" ref="author" />
+      <input type="text" placeholder="Say something..." ref="text" />
+      <input type="submit" value="Post" />
+      </form>
     );
   }
 });
@@ -79,7 +89,8 @@ var Comment = React.createClass({
   }
 });
 
+
 React.render(
-  <CommentBox url="comments.json" pollInterval={ 2000 } />,
+  <CommentBox url="comments.json" pollInterval={ 5000 } />,
   document.getElementById('content')
 );
